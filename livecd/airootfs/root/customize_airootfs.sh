@@ -11,7 +11,9 @@ usermod -s /usr/bin/zsh root
 cp -aT /etc/skel/ /root/
 chmod 700 /root
 
-useradd -c 'Live User' -m -G wheel -U liveuser
+if ! getent passwd liveuser ; then
+    useradd -c 'Live User' -m -G wheel -U liveuser
+fi
 passwd -d liveuser
 
 sed -i 's/#\(PermitRootLogin \).\+/\1yes/' /etc/ssh/sshd_config
