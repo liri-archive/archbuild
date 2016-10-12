@@ -30,3 +30,5 @@ systemctl enable pacman-init.service choose-mirror.service
 systemctl enable acpid.service avahi-daemon.service accounts-daemon.service upower.service NetworkManager.service sddm.service
 systemctl disable systemd-networkd.service systemd-resolved.service
 systemctl set-default graphical.target
+
+plymouth-set-default-theme lirios
