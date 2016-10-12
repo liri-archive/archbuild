@@ -32,3 +32,5 @@ systemctl disable systemd-networkd.service systemd-resolved.service
 systemctl set-default graphical.target
 
 plymouth-set-default-theme lirios
+
+sed -i 's/^Current=.*/Current=lirios/' /etc/sddm.conf
