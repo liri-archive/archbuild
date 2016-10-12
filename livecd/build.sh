@@ -264,8 +264,8 @@ done
 run_once make_packages_efi
 
 for arch in x86_64; do
-    run_once make_setup_mkinitcpio
     run_once make_customize_airootfs
+    run_once make_setup_mkinitcpio
 done
 
 for arch in x86_64; do
