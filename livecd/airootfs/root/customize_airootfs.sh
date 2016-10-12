@@ -25,5 +25,6 @@ sed -i 's/#\(HandleLidSwitch=\)suspend/\1ignore/' /etc/systemd/logind.conf
 sed -i 's/hosts: files dns myhostname/hosts: files mdns_minimal [NOTFOUND=return] dns myhostname/' /etc/nsswitch.conf
 
 systemctl enable pacman-init.service choose-mirror.service
-systemctl enable acpid.service avahi-daemon.service accounts-daemon.service upower.service sddm.service
+systemctl enable acpid.service avahi-daemon.service accounts-daemon.service upower.service NetworkManager.service sddm.service
+systemctl disable systemd-networkd.service systemd-resolved.service
 systemctl set-default graphical.target
