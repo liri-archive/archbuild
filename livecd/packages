@@ -118,7 +118,11 @@ xf86-input-void
 xf86-input-wacom
 xorg-server
 xorg-server-utils
+open-vm-tools
 sddm
 weston
 paper-icon-theme-git
 liri-shell-git
+liri-themes-git
+calamares
+qterminal
