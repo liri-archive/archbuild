@@ -12,6 +12,7 @@ gpg_key=
 
 arch=$(uname -m)
 verbose=""
+rebuild=0
 script_path=$(readlink -f ${0%/*})
 
 _usage ()
@@ -32,6 +33,7 @@ _usage ()
     echo "    -o <out_dir>       Set the output directory"
     echo "                        Default: ${out_dir}"
     echo "    -v                 Enable verbose output"
+    echo "    -f                 Force rebuild"
     echo "    -h                 This help message"
     exit ${1}
 }
@@ -226,7 +228,7 @@ if [[ ${arch} != x86_64 ]]; then
     _usage 1
 fi
 
-while getopts 'N:V:L:D:w:o:g:vh' arg; do
+while getopts 'N:V:L:D:w:o:g:vfh' arg; do
     case "${arg}" in
         N) iso_name="${OPTARG}" ;;
         V) iso_version="${OPTARG}" ;;
@@ -236,6 +238,7 @@ while getopts 'N:V:L:D:w:o:g:vh' arg; do
         o) out_dir="${OPTARG}" ;;
         g) gpg_key="${OPTARG}" ;;
         v) verbose="-v" ;;
+        f) rebuild=1 ;;
         h) _usage 0 ;;
         *)
            echo "Invalid argument '${arg}'"
@@ -245,6 +248,10 @@ while getopts 'N:V:L:D:w:o:g:vh' arg; do
 done
 
 mkdir -p ${work_dir}
+
+if [[ ${rebuild} -eq 1 ]]; then
+    rm -f ${work_dir}/build.make_*
+fi
 
 run_once make_pacman_conf
 
