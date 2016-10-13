@@ -34,3 +34,5 @@ systemctl set-default graphical.target
 plymouth-set-default-theme lirios
 
 sed -i 's/^Current=.*/Current=lirios/' /etc/sddm.conf
+
+cp -f /usr/share/liri-calamares-branding/calamares.desktop /usr/share/applications/calamares.desktop
