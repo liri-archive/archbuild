@@ -124,5 +124,10 @@ weston
 paper-icon-theme-git
 liri-shell-git
 liri-themes-git
+liri-appcenter-git
+liri-files-git
+liri-settings-git
+material-gtk-theme-git
 calamares
+liri-calamares-branding-git
 qterminal
