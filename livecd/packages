@@ -114,6 +114,21 @@ xf86-input-vmmouse
 xf86-input-void
 xf86-input-wacom
 open-vm-tools
+# Printing
+cups
+ghostscript
+gsfonts
+gutenprint
+foomatic-db
+foomatic-db-engine
+foomatic-db-nonfree
+foomatic-filters
+cups-filters
+hplip
+splix
+cups-pdf
+# Scanner
+sane
 # Xorg (for SDDM)
 xorg-server
 xorg-server-utils
