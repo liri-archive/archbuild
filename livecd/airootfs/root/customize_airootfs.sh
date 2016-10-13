@@ -11,6 +11,8 @@ usermod -s /usr/bin/zsh root
 cp -aT /etc/skel/ /root/
 chmod 700 /root
 
+passwd -d root
+
 if ! getent passwd liveuser ; then
     useradd -c 'Live User' -m -G wheel -U liveuser
 fi
