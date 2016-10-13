@@ -18,6 +18,10 @@ if ! getent passwd liveuser ; then
 fi
 passwd -d liveuser
 
+if [[ -d /etc/sudoers.d ]]; then
+    echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/00-livemedia
+fi
+
 sed -i 's/#\(PermitRootLogin \).\+/\1yes/' /etc/ssh/sshd_config
 sed -i "s/#Server/Server/g" /etc/pacman.d/mirrorlist
 sed -i 's/#\(Storage=\)auto/\1volatile/' /etc/systemd/journald.conf
