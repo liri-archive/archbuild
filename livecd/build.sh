@@ -215,7 +215,12 @@ make_prepare() {
 
 # Build ISO
 make_iso() {
-    mkarchiso ${verbose} -w "${work_dir}" -D "${install_dir}" -L "${iso_label}" -o "${out_dir}" iso "${iso_name}-${iso_version}.iso"
+    local _iso_filename="${iso_name}-${iso_version}.iso"
+    mkarchiso ${verbose} -w "${work_dir}" -D "${install_dir}" -L "${iso_label}" -o "${out_dir}" iso "${_iso_filename}"
+    pushd ${out_dir} >/dev/null
+    sha1sum "${_iso_filename}" > "${_iso_filename}.sha1sum"
+    sha256sum "${_iso_filename}" > "${_iso_filename}.sha256sum"
+    popd >/dev/null
 }
 
 if [[ ${EUID} -ne 0 ]]; then
