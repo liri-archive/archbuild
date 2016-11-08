@@ -146,7 +146,7 @@ liri-shell-git
 liri-appcenter-git
 liri-files-git
 liri-settings-git
-qterminal
+liri-terminal-git
 # Themes
 liri-themes-git
 material-gtk-theme-git
