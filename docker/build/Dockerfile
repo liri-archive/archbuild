@@ -5,6 +5,7 @@ RUN mkdir -p /build && \
     mkdir -p /repo && \
     cat /tmp/pacman-repo.conf >> /etc/pacman.conf && \
     rm -f /tmp/pacman-repo.conf && \
+    sed -i -e 's,^#MAKEFLAGS=,MAKEFLAGS=,g' /etc/makepkg.conf && \
     pacman -Syu --noconfirm && \
     pacman-db-upgrade && \
     pacman -S --noconfirm git && \
