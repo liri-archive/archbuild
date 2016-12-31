@@ -43,9 +43,11 @@ sed -i 's/^Current=.*/Current=lirios/' /etc/sddm.conf
 
 cp -f /usr/share/liri-calamares-branding/calamares.desktop /usr/share/applications/calamares.desktop
 
-cat >> /etc/pacman.conf <<EOF
+if ! grep '[liri-unstable]' /etc/pacman.conf; then
+    cat >> /etc/pacman.conf <<EOF
 
 [liri-unstable]
 SigLevel = Optional TrustAll
 Server = https://repo.liri.io/archlinux/unstable/\$arch/
 EOF
+fi
