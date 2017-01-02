@@ -6,6 +6,9 @@ RUN mkdir -p /build && \
     cat /tmp/pacman-repo.conf >> /etc/pacman.conf && \
     rm -f /tmp/pacman-repo.conf && \
     sed -i -e 's,^#MAKEFLAGS=,MAKEFLAGS=,g' /etc/makepkg.conf && \
+    pacman -Sy --noconfirm archlinux-keyring && \
+    pacman-key --populate && \
+    pacman-key --refresh-keys && \
     pacman -Syu --noconfirm && \
     pacman-db-upgrade && \
     pacman -S --noconfirm git && \
