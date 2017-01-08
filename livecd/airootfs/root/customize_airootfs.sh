@@ -43,7 +43,7 @@ sed -i 's/^Current=.*/Current=lirios/' /etc/sddm.conf
 
 cp -f /usr/share/liri-calamares-branding/calamares.desktop /usr/share/applications/calamares.desktop
 
-if ! grep '[liri-unstable]' /etc/pacman.conf; then
+if ! grep -q '\[liri-unstable\]' /etc/pacman.conf; then
     cat >> /etc/pacman.conf <<EOF
 
 [liri-unstable]
