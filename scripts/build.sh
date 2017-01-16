@@ -136,6 +136,24 @@ getpkgver() {
 }
 
 ##
+# usage: getpkgrel( $pkgbuild )
+##
+getpkgrel() {
+    pkgbuild=$1
+
+    if [ -z "$pkgbuild" ]; then
+        return 1
+    fi
+
+    basedir=`readlink -f $(dirname $pkgbuild)`
+    srcdir="$basedir/src"
+
+    source $pkgbuild
+
+    echo $pkgrel
+}
+
+##
 # usage: should_build_package()
 ##
 should_build_package() {
@@ -154,7 +172,7 @@ should_build_package() {
     fi
 
     for pkg in "${pkgname[@]}"; do
-        PKGDEST=/repo find_cached_package $pkg $_pkgver $_arch
+        PKGDEST=/repo find_cached_package $pkg ${_pkgver}-${pkgrel:-1} $_arch
         if [ $? -eq 0 ]; then
             return 1
         fi
