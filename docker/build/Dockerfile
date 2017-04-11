@@ -12,6 +12,7 @@ RUN mkdir -p /build && \
     pacman -Syu --noconfirm && \
     pacman-db-upgrade && \
     pacman -S --noconfirm git && \
+    /sbin/ldconfig -v && \
     rm -f /var/cache/pacman/pkg/*.pkg.tar.* && \
     useradd -u 1000 -m builduser && \
     passwd -d builduser && \
