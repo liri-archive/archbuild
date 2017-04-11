@@ -75,7 +75,7 @@ case "$arch" in
 		PACMAN_EXTRA_PKGS=''
 		EXPECT_TIMEOUT=60
 		ARCH_KEYRING=archlinux
-		DOCKER_IMAGE_NAME=archlinux
+		DOCKER_IMAGE_NAME=archlinux/devel
 		;;
 esac
 
