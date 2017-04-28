@@ -1,6 +1,7 @@
 FROM liri-docker-build.bintray.io/archlinux/devel
 ADD pacman-repo.conf /tmp/pacman-repo.conf
 ADD entrypoint /bin/entrypoint
+ARG CACHEBUST=1
 RUN mkdir -p /build && \
     mkdir -p /repo && \
     cat /tmp/pacman-repo.conf >> /etc/pacman.conf && \
