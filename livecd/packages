@@ -106,7 +106,6 @@ cups-pdf
 sane
 # Xorg (for SDDM)
 xorg-server
-xorg-server-utils
 xorg-xauth
 # Boot splash
 plymouth
