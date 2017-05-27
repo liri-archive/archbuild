@@ -121,6 +121,9 @@ liri-appcenter-git
 liri-files-git
 liri-settings-git
 liri-terminal-git
+liri-calculator-git
+liri-browser-git
+liri-text-git
 # Themes
 liri-themes-git
 liri-wallpapers-git
