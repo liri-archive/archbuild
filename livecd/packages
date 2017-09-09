@@ -97,8 +97,10 @@ gsfonts
 gutenprint
 foomatic-db
 foomatic-db-engine
+foomatic-db-gutenprint-ppds
 foomatic-db-nonfree
-foomatic-filters
+foomatic-db-nonfree-ppds
+foomatic-db-ppds
 hplip
 splix
 cups-pdf
