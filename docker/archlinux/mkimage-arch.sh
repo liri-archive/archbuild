@@ -81,6 +81,19 @@ esac
 
 export PACMAN_MIRRORLIST
 
+setup_pacaur() {
+	# FIXME: makepkg doesn't work as root, need to create an unprivileged user first
+	local cowerarchive="cower.tar.gz"
+	local aururl="https://aur.archlinux.org/cgit/aur.git/snapshot"
+	arch-chroot $ROOTFS /bin/sh -c "curl -O $aururl/$cowerarchive"
+	arch-chroot $ROOTFS /bin/sh -c "tar xf $cowerarchive"
+	arch-chroot $ROOTFS /bin/sh -c 'cd cower && makepkg -is --skippgpcheck --noconfirm'
+	arch-chroot $ROOTFS /bin/sh -c "rm -rf cower; rm -f $cowerarchive"
+	arch-chroot $ROOTFS /bin/sh -c "cower -dd pacaur"
+	arch-chroot $ROOTFS /bin/sh -c "cd pacaur && makepkg -is --noconfirm"
+	arch-chroot $ROOTFS /bin/sh -c "rm -rf pacaur"
+}
+
 expect <<EOF
 	set send_slow {1 .1}
 	proc send {ignore arg} {
@@ -88,8 +101,7 @@ expect <<EOF
 		exp_send -s -- \$arg
 	}
 	set timeout $EXPECT_TIMEOUT
-
-	spawn pacstrap -C $PACMAN_CONF -c -d -G -i $ROOTFS base haveged $PACMAN_EXTRA_PKGS $PACMAN_ADDITIONAL_PKGS --ignore $PKGIGNORE
+	spawn pacstrap -C $PACMAN_CONF -c -d -G -i $ROOTFS base haveged --ignore $PKGIGNORE
 	expect {
 		-exact "anyway? \[Y/n\] " { send -- "n\r"; exp_continue }
 		-exact "(default=all): " { send -- "\r"; exp_continue }
@@ -98,12 +110,15 @@ expect <<EOF
 	}
 EOF
 
-arch-chroot $ROOTFS /bin/sh -c 'rm -r /usr/share/man/*'
+arch-chroot $ROOTFS /bin/ls # apparently needed to make chroot work after this line
 arch-chroot $ROOTFS /bin/sh -c "haveged -w 1024; pacman-key --init; pkill haveged; pacman -Rs --noconfirm haveged; pacman-key --populate $ARCH_KEYRING; pkill gpg-agent"
+arch-chroot $ROOTFS pacman -Sy --noconfirm $PACMAN_EXTRA_PKGS $PACMAN_ADDITIONAL_PKGS
+arch-chroot $ROOTFS /bin/sh -c 'rm -r /usr/share/man/*'
 arch-chroot $ROOTFS /bin/sh -c "ln -sf /usr/share/zoneinfo/UTC /etc/localtime"
 echo 'en_US.UTF-8 UTF-8' > $ROOTFS/etc/locale.gen
 arch-chroot $ROOTFS locale-gen
 arch-chroot $ROOTFS /bin/sh -c 'echo $PACMAN_MIRRORLIST > /etc/pacman.d/mirrorlist'
+#setup_pacaur
 
 # udev doesn't work in containers, rebuild /dev
 DEV=$ROOTFS/dev

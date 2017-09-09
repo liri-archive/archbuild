@@ -11,6 +11,6 @@ clean:
 build: clean
 	@./mkimage-arch.sh base-devel sudo devtools git archiso
 
-push: build
+push:
 	@docker tag $(shell docker images -q $(PREFIX)/$(NAME)) $(REGISTRY_URL)/$(PREFIX)/$(NAME):$(VERSION)
 	@docker push $(REGISTRY_URL)/$(PREFIX)/$(NAME):$(VERSION)
