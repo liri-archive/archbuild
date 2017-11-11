@@ -1,6 +1,6 @@
 REGISTRY_NAME=liridev/archlinux-base
 PREFIX=archlinux
-NAME=base
+NAME=devel
 VERSION=latest
 
 all: build
