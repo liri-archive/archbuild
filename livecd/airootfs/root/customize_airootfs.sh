@@ -39,9 +39,19 @@ systemctl set-default graphical.target
 
 plymouth-set-default-theme lirios
 
-sed -i 's/^Session=.*/Session=liri/' /etc/sddm.conf
-sed -i 's/^User=.*/User=liveuser/' /etc/sddm.conf
-sed -i 's/^Current=.*/Current=lirios/' /etc/sddm.conf
+#sed -i 's/^Session=.*/Session=liri/' /etc/sddm.conf
+#sed -i 's/^User=.*/User=liveuser/' /etc/sddm.conf
+#sed -i 's/^Current=.*/Current=lirios/' /etc/sddm.conf
+mkdir -p /usr/lib/sddm.conf.d
+cat > /usr/lib/sddm.conf.d/00-lirios.conf <<EOF
+[Theme]
+Current=lirios
+EOF
+cat > /usr/lib/sddm.conf.d/01-livemedia.conf <<EOF
+[Autologin]
+Session=liri
+User=liveuser
+EOF
 
 cp -f /usr/share/liri-calamares-branding/calamares.desktop /usr/share/applications/calamares.desktop
 
