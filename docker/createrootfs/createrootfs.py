@@ -130,7 +130,7 @@ def setup_dev(root_dir):
         os.system('mknod -m {mode} {path}/{name} {args}'.format(name=device, path=dev_dir, mode=devices[device]['mode'], args=devices[device]['args']))
 
 
-def setup_rootfs(archive_filename):
+def setup_rootfs(archive_filename, nameserver=None, nosignedpackages=False, addliriosrepo=False):
     """
     Set OS root up uncompressing the `archive_filename` tar archive.
     """
@@ -146,15 +146,18 @@ def setup_rootfs(archive_filename):
     tar.close()
     pacmanconf_filename = os.path.join(root_dir, 'etc', 'pacman.conf')
     mirror_filename = os.path.join(root_dir, 'etc', 'pacman.d', 'mirrorlist')
-    resolvconf_filename = os.path.join(root_dir, 'etc', 'resolv.conf')
     # Do not require signed packages
-    replace_in_file(pacmanconf_filename, 'SigLevel    = Required DatabaseOptional', 'SigLevel = Never')
+    if nosignedpackages is True:
+        replace_in_file(pacmanconf_filename, 'SigLevel    = Required DatabaseOptional', 'SigLevel = Never')
     # Add Liri OS repository
-    append_to_file(pacmanconf_filename, '\n[liri-unstable]\nSigLevel = Optional TrustAll\nServer = https://repo.liri.io/archlinux/unstable/$arch\n')
+    if addliriosrepo is True:
+        append_to_file(pacmanconf_filename, '\n[liri-unstable]\nSigLevel = Optional TrustAll\nServer = https://repo.liri.io/archlinux/unstable/$arch\n')
     # Add mirror
     append_to_file(mirror_filename, 'Server = {}/$repo/os/$arch\n'.format(ARCH_LINUX_MIRROR))
     # Add Google nameserver to resolv.conf
-    append_to_file(resolvconf_filename, 'nameserver 8.8.8.8')
+    if nameserver is not None:
+        resolvconf_filename = os.path.join(root_dir, 'etc', 'resolv.conf')
+        append_to_file(resolvconf_filename, 'nameserver 8.8.8.8')
     # Setup /dev
     setup_dev(root_dir)
 
@@ -169,6 +172,12 @@ if __name__ == '__main__':
                         help='alternative Arch Linux mirror (default: %s)' % ARCH_LINUX_MIRROR)
     parser.add_argument('--archive', dest='archive', type=str,
                         help='use this archive instead of downloading a new one')
+    parser.add_argument('--nameserver', dest='nameserver', type=str,
+                        help='use an alternative nameserver')
+    parser.add_argument('--siglevel-never', dest='nosignedpackages', actore='store_true',
+                        help='do not require packages to be signed')
+    parser.add_argument('--lirios-repo', dest='addliriosrepo', actore='store_true',
+                        help='add the Liri OS repository')
 
     args = parser.parse_args()
 
@@ -181,7 +190,9 @@ if __name__ == '__main__':
     else:
         archive_filename = find_iso()
     if archive_filename:
-        setup_rootfs(archive_filename)
+        setup_rootfs(archive_filename, nameserver=args.nameserver,
+                     nosignedpackages=args.nosignedpackages,
+                     addliriosrepo=args.addliriosrepo)
     else:
         print('Unable to find an Arch Linux ISO!', file=sys.stderr)
         sys.exit(1)
