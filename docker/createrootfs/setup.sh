@@ -24,17 +24,12 @@
 
 set -e
 
+# Update keys
+pacman-key --init
+pacman-key --populate archlinux
+
 # Update packages
 pacman -Syu --noconfirm
-
-# Update keys
-pacman -S --noconfirm haveged procps-ng
-haveged -w 1024
-pacman-key --init
-pkill haveged || /bin/true
-pacman -Rs --noconfirm haveged
-pacman-key --populate archlinux
-pkill gpg-agent || /bin/true
 
 # Setup locale
 ln -sf /usr/share/zoneinfo/UTC /etc/localtime
