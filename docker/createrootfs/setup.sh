@@ -37,4 +37,4 @@ pacman -S --noconfirm sed
 # Setup locale
 ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 echo en_US.UTF-8 UTF-8 >> /etc/locale.gen
-locale-gen
+#locale-gen
