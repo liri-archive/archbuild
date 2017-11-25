@@ -174,9 +174,9 @@ if __name__ == '__main__':
                         help='use this archive instead of downloading a new one')
     parser.add_argument('--nameserver', dest='nameserver', type=str,
                         help='use an alternative nameserver')
-    parser.add_argument('--siglevel-never', dest='nosignedpackages', actore='store_true',
+    parser.add_argument('--siglevel-never', dest='nosignedpackages', action='store_true',
                         help='do not require packages to be signed')
-    parser.add_argument('--lirios-repo', dest='addliriosrepo', actore='store_true',
+    parser.add_argument('--lirios-repo', dest='addliriosrepo', action='store_true',
                         help='add the Liri OS repository')
 
     args = parser.parse_args()
