@@ -1,3 +1,0 @@
-#!/bin/bash
-chown -R builduser /build
-exec su builduser "$@"
