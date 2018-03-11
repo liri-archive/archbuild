@@ -61,6 +61,7 @@ wvdial
 xl2tpd
 zd1211-firmware
 # Hardware
+acpi
 acpid
 networkmanager
 upower
@@ -89,6 +90,7 @@ xf86-input-vmmouse
 xf86-input-void
 xf86-input-wacom
 open-vm-tools
+thermald
 # Printing
 cups
 ghostscript
